@@ -1,0 +1,7 @@
+/node_modules/
+package-lock.json
+.env
+/example/
+/.idea
+example/index.html
+src/config/service-account-file.json
