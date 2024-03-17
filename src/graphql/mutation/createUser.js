@@ -2,7 +2,7 @@
  * Constant representing the name of the resolver.
  * @type {string}
  */
-export const name = 'createUser';
+export const name = 'createCustomer';
 
 /**
  * Constant representing whether authentication is required for this resolver.

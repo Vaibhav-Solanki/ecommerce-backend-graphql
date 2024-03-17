@@ -1,5 +1,9 @@
 import { ApolloServer } from '@apollo/server';
 import { startStandaloneServer } from '@apollo/server/standalone';
+
+import './src/config/app-config.js'
+import './src/firebase.js'
+
 import context from './src/context.js'; // Importing the context for server
 import typeDefs from './src/graphql/schema.js'; // Importing GraphQL schema
 import resolvers from './src/graphql/resolvers.js'; // Importing GraphQL resolvers
@@ -16,16 +20,18 @@ const server = new ApolloServer({
 
 // Starting the standalone server
 const { url } = await startStandaloneServer(server, {
-    listen: { port: 4000 }, // Listening port
+    listen: { port: process.env.PORT }, // Listening port
     context: async ({ req }) => {
         // Custom context function to handle authorization
         // get the user token from the headers
-        const token = req.headers.authorization || '';
+        const token = req.headers.authorization;
         let user = {
             identity: {},
             decoded: {},
             isAuthorized: false
         };
+
+        if(!token) return { user, context };
 
         try {
             // Verifying user token
@@ -38,7 +44,6 @@ const { url } = await startStandaloneServer(server, {
         } catch (error) {
             console.warn(error);
         }
-
         return { user, context };
     },
 });

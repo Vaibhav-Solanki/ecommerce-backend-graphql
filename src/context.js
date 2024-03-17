@@ -3,10 +3,10 @@
  */
 
 // Import the database connection
-import db from './database/db.js'
+import * as dal from './database/db.js'
 
 // Import the Firebase app and authentication module
 import { app, auth } from './firebase.js'
 
 // Export the database connection, app, and auth module
-export default { db, app, auth }
+export default { dal, app, auth }

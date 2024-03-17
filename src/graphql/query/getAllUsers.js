@@ -2,22 +2,23 @@
  * Constant representing the name of the resolver.
  * @type {string}
  */
-export const name = 'getAllUsers';
+export const name = 'customers';
 
 /**
  * Constant representing whether authentication is required for this resolver.
  * @type {boolean}
  */
-export const auth = true;
+export const auth = false;
 
 /**
  * Resolver function for fetching all users.
  * @returns {Array<object>} - An array of user objects.
  */
-export function resolver() {
-  // Return an array of user objects
-  return [
-    { id: 1, name: 'John Doe', email: 'john@example.com' },
-    { id: 2, name: 'Jane Smith', email: 'jane@example.com' }
-  ];
+export async function resolver({ context }) {
+  const {dal} = context
+
+  const repo = await dal.getRepo('customers')
+
+
+  return await repo.findAll();
 }

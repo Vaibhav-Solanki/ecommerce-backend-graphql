@@ -5,19 +5,26 @@
 
 // Import required modules
 import glob from 'glob-promise';
+import path, { dirname } from 'path';
+import { fileURLToPath } from 'url';
 import gqlWrapper from './gql-wrapper.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 // Define a helper function to log information
 const logInfo = (...args) => console.info(...args);
 
 // Generate resolver file pattern based on resolver type
-const generateResolverPattern = (resolver) => `./src/graphql/${resolver}/*.js`;
+const generateResolverPattern = (resolver) => {
+    return path.join(__dirname, `${resolver}/*.js`)
+};
 
 // Load resolver packages from files
 const loadResolverPackages = async (files) => {
     return Promise.all(files.map(async (file) => {
         logInfo(`Loading resolver file: ${file}`);
-        return await import('../../' + file);
+        return await import(file);
     }));
 };
 
@@ -56,7 +63,7 @@ const typeResolvers = {};
 // Load all resolvers for each resolver type
 async function loadAllResolvers() {
     for (const resolverType of resolverTypes) {
-        typeResolvers[resolverType] = await initializeResolvers(resolverType);
+        typeResolvers[resolverType] = await initializeResolvers(resolverType.toLowerCase());
     }
 }
 
