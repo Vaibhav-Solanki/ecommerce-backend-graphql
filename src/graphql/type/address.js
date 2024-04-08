@@ -1,10 +1,10 @@
-export const name = 'Address';
+export const name = 'Address'
 
 export const resolver = {
-    async customer(parent, args, contextValue) {
-        const {dal} = contextValue.context
+  async customer (parent, args, contextValue) {
+    const { dal } = contextValue.context
 
-        const repo = await dal.getRepo('customers')
-        return await repo.findById(parent.customer_id)
-    },
+    const repo = await dal.getRepo('customers')
+    return await repo.findById(parent.customer_id)
+  }
 }

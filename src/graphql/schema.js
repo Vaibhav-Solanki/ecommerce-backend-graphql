@@ -1,4 +1,4 @@
-export default  `#graphql
+export default `#graphql
 type Brand {
     id: Int!
     name: String!

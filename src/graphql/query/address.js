@@ -1,12 +1,12 @@
-export const name = 'address';
+export const name = 'address'
 
-export const auth = false;
+export const auth = false
 
-export async function resolver(parent, args, contextValue) {
-    const {id} = args
+export async function resolver (parent, args, contextValue) {
+  const { id } = args
 
-    const {dal} = contextValue.context
-    const repo = await dal.getRepo('addresses')
+  const { dal } = contextValue.context
+  const repo = await dal.getRepo('addresses')
 
-    return await repo.findById(id);
+  return await repo.findById(id)
 }

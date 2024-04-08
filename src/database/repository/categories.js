@@ -1,7 +1,7 @@
-import Base from './base.js';
+import Base from './base.js'
 
 class CategoryRepo extends Base {
 
 }
 
-export default CategoryRepo;
+export default CategoryRepo

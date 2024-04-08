@@ -1,7 +1,7 @@
-import Base from './base.js';
+import Base from './base.js'
 
 class ProductRepo extends Base {
 
 }
 
-export default ProductRepo;
+export default ProductRepo

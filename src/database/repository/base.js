@@ -1,98 +1,99 @@
 class BaseRepo {
-    constructor(entityName, model, getModel, getRepo) {
-        this.entityName = entityName;
-        this.model = model;
-        this.getModel = getModel;
-        this.getRepo = getRepo;
+  constructor (entityName, model, getModel, getRepo) {
+    this.entityName = entityName
+    this.model = model
+    this.getModel = getModel
+    this.getRepo = getRepo
+  }
+
+  static DEFAULT_LIMIT = 1000
+
+  static DEFAULT_TZ = 'Asia/Kolkata'
+
+  mapBy (index, list) {
+    const m = new Map()
+    if (list?.length) {
+      for (const i of list) if (i) m.set(i[index], i)
     }
 
-    static DEFAULT_LIMIT = 1000;
+    return m
+  }
 
-    static DEFAULT_TZ = 'Asia/Kolkata';
+  mapByKey (keyFn, list) {
+    const m = new Map()
+    if (list?.length) {
+      for (const i of list) if (i) m.set(keyFn(i), i)
+    }
 
-    mapBy(index, list) {
-        const m = new Map();
-        if (list?.length) {
-            for(const i of list) if (i) m.set(i[index], i);
+    return m
+  }
+
+  mapListBy (index, list, key) {
+    const v = key ? i => key(i) : i => i
+    const m = new Map()
+    if (list?.length) {
+      for (const i of list) {
+        const l = m.get(i[index])
+        if (l) {
+          l.push(v(i))
+        } else {
+          m.set(i[index], [v(i)])
         }
-
-        return m;
+      }
     }
 
-    mapByKey(keyFn, list) {
-        const m = new Map();
-        if (list?.length) {
-            for(const i of list) if (i) m.set(keyFn(i), i);
-        }
+    return m
+  }
 
-        return m;
+  partitionBy (f, list) {
+    const p = []
+    for (const i of list) {
+      const index = Number(f(i))
+      if (p[index]) {
+        p[index].push(i)
+      } else {
+        p[index] = [i]
+      }
     }
 
-    mapListBy(index, list, key) {
-        const v = key ? i => key(i) : i => i;
-        const m = new Map();
-        if (list?.length) {
-            for(const i of list) {
-                const l = m.get(i[index]);
-                if (l) {
-                    l.push(v(i));
-                } else {
-                    m.set(i[index], [v(i)]);
-                }
-            }
-        }
+    return p
+  }
 
-        return m;
-    }
+  chunks (arr, size = 1000) {
+    return size ? [...Array(Math.ceil(arr.length / size))].map((_, i) => arr.slice(i * size, i * size + size)) : [arr]
+  }
 
-    partitionBy(f, list) {
-        const p = [];
-        for(const i of list) {
-            const index = Number(f(i));
-            if (p[index]) {
-                p[index].push(i);
-            } else {
-                p[index] = [i];
-            }
-        }
+  async findById (id) {
+    return await this.model.query().findById(id)
+  }
 
-        return p;
-    }
+  async findOneGroup (group) {
+    return await this.model.query().findOne(group)
+  }
 
-    chunks(arr, size = 1000) {
-        return size ? [...Array(Math.ceil(arr.length / size))].map((_, i) => arr.slice(i * size, i * size + size)) : [arr];
-    }
+  async findAll (column = 'id', order = 'desc') {
+    return await this.model.query().orderBy(column, order)
+  }
 
-    async findById(id) {
-        return await this.model.query().findById(id)
-    }
+  async findOne (query) {
+    return await this.model.query().findOne(query)
+  }
 
-    async findOneGroup(group) {
-        return await this.model.query().findOne(group);
-    }
+  async insert (entity) {
+    return await this.model.query().insertAndFetch(entity)
+  }
 
-    async findAll(column= 'id', order= 'desc') {
-        return await this.model.query().orderBy(column, order);
-    }
+  async update (entity, update) {
+    return await this.model.update(update).where(entity)
+  }
 
-    async findOne(query) {
-        return await this.model.query().findOne(query);
-    }
+  async delete (entity) {
+    return await this.model.query().delete().where(entity)
+  }
 
-    async insert(entity) {
-        return await this.model.query().insertAndFetch(entity);
-    }
-    async update(entity, update) {
-        return await this.model.update(update).where(entity);
-    }
-
-    async delete(entity) {
-        return await this.model.query().delete().where(entity)
-    }
-
-    getTimestamp(dateTime) {
-        return Math.floor(new Date(dateTime).getTime() / 1000);
-    }
+  getTimestamp (dateTime) {
+    return Math.floor(new Date(dateTime).getTime() / 1000)
+  }
 }
 
-export default BaseRepo;
+export default BaseRepo

@@ -1,7 +1,7 @@
-import Base from './base.js';
+import Base from './base.js'
 
 class OrderItemRepo extends Base {
 
 }
 
-export default OrderItemRepo;
+export default OrderItemRepo
