@@ -9,6 +9,7 @@ import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import gqlWrapper from './gql-wrapper.js';
 
+// Get the current filename and directory
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -47,8 +48,14 @@ const initializeResolvers = async (resolverType) => {
     if (packages && packages.length) {
         // Iterate over each package
         for (const pkg of packages) {
-            // Wrap resolver function with authentication check and add to resolvers object
-            resolvers[pkg.name] = gqlWrapper(pkg.resolver, pkg.auth);
+            // If the resolver is an object, directly assign it to resolvers
+            if(typeof pkg.resolver === 'object'){
+                resolvers[pkg.name] = pkg.resolver
+            }
+            // If the resolver is a function, wrap it with authentication check and add to resolvers object
+            else if(typeof pkg.resolver === 'function'){
+                resolvers[pkg.name] = gqlWrapper(pkg.resolver, pkg.auth);
+            }
         }
     }
 
@@ -58,10 +65,12 @@ const initializeResolvers = async (resolverType) => {
 // Define resolver types
 const resolverTypes = ['Query', 'Mutation'];
 // Initialize an object to store resolvers organized by type
-const typeResolvers = {};
+let typeResolvers = {};
 
 // Load all resolvers for each resolver type
 async function loadAllResolvers() {
+    typeResolvers = await initializeResolvers('type')
+
     for (const resolverType of resolverTypes) {
         typeResolvers[resolverType] = await initializeResolvers(resolverType.toLowerCase());
     }

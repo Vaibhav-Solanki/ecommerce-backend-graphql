@@ -27,7 +27,7 @@ type Product {
 
 type ProductVariant {
     id: Int!
-    product: Product!
+    product: Product
     variant_name: String!
     variant_description: String
     price: Float!
@@ -37,7 +37,7 @@ type ProductVariant {
 type Address {
     id: Int!
     customer_id: Int!
-    customer: Customer!
+    customer: Customer
     address_line1: String!
     address_line2: String
     city: String!
@@ -60,22 +60,22 @@ type Customer {
 type Order {
     id: Int!
     customer_id: Int!
-    customer: Customer!
+    customer: Customer
     order_date: String!
     total_amount: Float!
     status: String!
     shipping_address_id: Int!
-    shipping_address: Address!
+    shipping_address: Address
     payment_method: String
-    order_items: [OrderItem]!
+    order_items: [OrderItem]
 }
 
 type OrderItem {
     id: Int!
     order_id: Int!
-    order: Order!
+    order: Order
     product_id: Int!
-    product: Product!
+    product: Product
     quantity: Int!
     unit_price: Float!
 }
@@ -83,9 +83,9 @@ type OrderItem {
 type Cart {
     id: Int!
     customer_id: Int!
-    customer: Customer!
+    customer: Customer
     product_id: Int!
-    product: Product!
+    product: Product
     quantity: Int!
     created_at: String!
 }
@@ -93,7 +93,7 @@ type Cart {
 type OrderPayment {
     id: Int!
     order_id: Int!
-    order: Order!
+    order: Order
     amount: Float!
     payment_date: String!
     payment_status: String!
@@ -102,11 +102,11 @@ type OrderPayment {
 
 type Review {
     id: Int!
-    product_id: Int!
-    product: Product!
-    customer_id: Int!
-    customer: Customer!
-    rating: Int!
+    product_id: Int
+    product: Product
+    customer_id: Int
+    customer: Customer
+    rating: Int
     review_text: String
     review_date: String!
 }

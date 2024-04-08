@@ -24,7 +24,7 @@ export default function (resolver, isPrivate) {
 
         try {
             // Call the resolver function with request context and data
-            return await resolver(requestContext, data);
+            return await resolver(...args);
         } catch (e) {
             console.error(e);
             // If an error occurs during resolver execution, throw a GraphQL error with appropriate status code
