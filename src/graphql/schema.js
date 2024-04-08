@@ -1,4 +1,6 @@
 export default `#graphql
+scalar DateTime
+
 type Brand {
     id: Int!
     name: String!
@@ -25,7 +27,7 @@ type Product {
     description: String
     price: Float!
     stock_quantity: Int!
-    created_at: String!
+    created_at: DateTime!
 }
 
 type ProductVariant {
@@ -57,7 +59,7 @@ type Customer {
     email: String!
     uid: String!
     password: String
-    created_at: String!
+    created_at: DateTime!
     addresses: [Address]
 }
 
@@ -91,7 +93,7 @@ type Cart {
     product_id: Int!
     product: Product
     quantity: Int!
-    created_at: String!
+    created_at: DateTime!
 }
 
 type OrderPayment {

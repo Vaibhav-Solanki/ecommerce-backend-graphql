@@ -7,8 +7,9 @@ class ProductRepo extends Base {
       if (query.brand_id) builder.where('category_id', query.category_id)
     })
   }
-  async findProductByBrand (brand_id) {
-    return await this.model.query().where('brand_id', brand_id)
+
+  async findProductByBrand (brandId) {
+    return await this.model.query().where('brand_id', brandId)
   }
 }
 
