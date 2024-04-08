@@ -4,6 +4,7 @@ type Brand {
     name: String!
     description: String
     website: String
+    products: [Product]
 }
 
 type Category {
@@ -121,19 +122,17 @@ type Query {
     category(id: Int!): Category
     products(category_id: Int brand_id: Int): [Product]
     product(id: Int!): Product
-    productVariants(id: Int product_id: Int): [ProductVariant]
     address(id: Int!): Address
+    addresses: [Address]
     customers: [Customer]
     customer(id: Int!): Customer
     getUser: Customer
-    orders(customer_id: Int): [Order]
+    orders: [Order]
     order(id: Int!): Order
-    carts(customer_id: Int): [Cart]
-    cart(id: Int!): Cart
-    orderPayments(order_id:Int!): [OrderPayment]
-    orderPayment(id: Int!): OrderPayment
+    cart: Cart
+    orderPayments: [OrderPayment]
+    orderPayment(order_id: Int!): OrderPayment
     reviews(product_id: Int!): [Review]
-    review(id: Int!): Review
 }
 
 type Mutation {
