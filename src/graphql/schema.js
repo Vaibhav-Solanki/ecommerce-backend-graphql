@@ -51,7 +51,7 @@ type Address {
 
 type Customer {
     id: Int!
-    name: String!
+    name: String
     picture: String
     email: String!
     uid: String!
@@ -125,6 +125,7 @@ type Query {
     address(id: Int!): Address
     customers: [Customer]
     customer(id: Int!): Customer
+    getUser: Customer
     orders(customer_id: Int): [Order]
     order(id: Int!): Order
     carts(customer_id: Int): [Cart]

@@ -23,9 +23,13 @@ const { url } = await startStandaloneServer(server, {
   listen: { port: process.env.PORT }, // Listening port
   context: async ({ req }) => {
     // Custom context function to handle authorization
+
+    const { dal } = context
+    const repo = await dal.getRepo('customers')
+
     // get the user token from the headers
     const token = req.headers.authorization
-    let user = {
+    const user = {
       identity: {},
       decoded: {},
       isAuthorized: false
@@ -36,11 +40,15 @@ const { url } = await startStandaloneServer(server, {
     try {
       // Verifying user token
       const decoded = await context.auth.verifyIdToken(token)
-      user = {
-        identity: {},
-        decoded,
-        isAuthorized: true
+      if (decoded.id) {
+        user.identity = await repo.findUserById(decoded.id)
+      } else {
+        user.identity = await repo.registerUser(decoded)
+        await context.auth.setCustomUserClaims(user.identity.uid, { id: user.identity.id })
       }
+
+      user.isAuthorized = true
+      user.decoded = decoded
     } catch (error) {
       console.warn(error)
     }

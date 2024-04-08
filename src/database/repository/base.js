@@ -1,14 +1,45 @@
 class BaseRepo {
-  constructor (entityName, model, getModel, getRepo) {
+  constructor (entityName, model, getModel, getRepo, cacheClient) {
     this.entityName = entityName
     this.model = model
     this.getModel = getModel
     this.getRepo = getRepo
+    this.cacheClient = cacheClient
   }
 
   static DEFAULT_LIMIT = 1000
 
   static DEFAULT_TZ = 'Asia/Kolkata'
+
+  async setData (key, value) {
+    const cacheKey = `${this.entityName}-${key}-${value[key]}`
+    const load = JSON.stringify(value)
+    return await this.cacheClient.set(cacheKey, load)
+  };
+
+  async getData (key, identity) {
+    const cacheKey = `${this.entityName}-${key}-${identity}`
+    const load = await this.cacheClient.get(cacheKey)
+    return JSON.parse(load)
+  };
+
+  async findOneDirect (key, value) {
+    return await this.model.query().findOne(key, value)
+  }
+
+  async findOneCached (key, value) {
+    let load = await this.getData(key, value)
+
+    if (!load) {
+      load = await this.findOneDirect(key, value)
+      await this.setData(key, load)
+    }
+    return load
+  }
+
+  async findOne (query) {
+    return await this.model.query().findOne(query)
+  }
 
   mapBy (index, list) {
     const m = new Map()
@@ -73,10 +104,6 @@ class BaseRepo {
 
   async findAll (column = 'id', order = 'desc') {
     return await this.model.query().orderBy(column, order)
-  }
-
-  async findOne (query) {
-    return await this.model.query().findOne(query)
   }
 
   async insert (entity) {

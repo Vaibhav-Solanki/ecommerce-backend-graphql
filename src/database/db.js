@@ -4,7 +4,12 @@
 
 // Import necessary modules
 import knex from 'knex'
-import { db } from '../config/app-config.js'
+import { createClient } from 'redis'
+import { db, redisUrl } from '../config/app-config.js'
+
+const cacheClient = await createClient({ url: redisUrl })
+  .on('error', err => console.error('Redis Client Error', err))
+  .connect()
 
 const logInfo = (...args) => console.info(...args)
 
@@ -40,7 +45,7 @@ export const getRepo = async (entityName) => {
     logInfo(`Loading repo file: ${filename}`)
     const { default: RepoClass } = await import(filename)
     const model = await getModel(entityName)
-    repo = new RepoClass(entityName, model, getModel, getRepo)
+    repo = new RepoClass(entityName, model, getModel, getRepo, cacheClient)
     repoMap.set(entityName, repo)
     return repo
   }

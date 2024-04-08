@@ -39,7 +39,7 @@ export const up = function (knex) {
     .then(function () {
       return knex.schema.createTable('customers', function (table) {
         table.increments('id').primary()
-        table.string('name', 50).notNullable()
+        table.string('name', 50)
         table.string('picture')
         table.string('email', 100).unique().notNullable()
         table.string('uid', 100).unique().notNullable()

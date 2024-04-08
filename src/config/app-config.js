@@ -14,3 +14,5 @@ export const db = {
 }
 
 export const configCateKey = process.env.CATE_KEY
+
+export const redisUrl = process.env.REDIS_URL
