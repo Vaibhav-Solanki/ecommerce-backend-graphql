@@ -6,12 +6,11 @@
 import knex from 'knex'
 import { createClient } from 'redis'
 import { db, redisUrl } from '../config/app-config.js'
+import logger from '../utils/logger.js'
 
 const cacheClient = await createClient({ url: redisUrl })
-  .on('error', err => console.error('Redis Client Error', err))
+  .on('error', err => logger.error('Redis Client Error', err))
   .connect()
-
-const logInfo = (...args) => console.info(...args)
 
 // Initialize Knex client with database configuration and snake case mappers
 export const client = knex(db)
@@ -28,7 +27,7 @@ export const getModel = async (entity) => {
     return model
   } else {
     const filename = composeEntityModelFilename(entity)
-    logInfo(`Loading model file: ${filename}`)
+    logger.info(`Loading model file: ${filename}`)
     const { default: model } = await import(filename)
     model.knex(client)
     modelMap.set(entity, model)
@@ -42,7 +41,7 @@ export const getRepo = async (entityName) => {
     return repo
   } else {
     const filename = composeEntityRepoFilename(entityName)
-    logInfo(`Loading repo file: ${filename}`)
+    logger.info(`Loading repo file: ${filename}`)
     const { default: RepoClass } = await import(filename)
     const model = await getModel(entityName)
     repo = new RepoClass(entityName, model, getModel, getRepo, cacheClient)

@@ -8,13 +8,11 @@ import glob from 'glob-promise'
 import path, { dirname } from 'path'
 import { fileURLToPath } from 'url'
 import gqlWrapper from './gql-wrapper.js'
+import logger from '../utils/logger.js'
 
 // Get the current filename and directory
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
-
-// Define a helper function to log information
-const logInfo = (...args) => console.info(...args)
 
 // Generate resolver file pattern based on resolver type
 const generateResolverPattern = (resolver) => {
@@ -24,7 +22,7 @@ const generateResolverPattern = (resolver) => {
 // Load resolver packages from files
 const loadResolverPackages = async (files) => {
   return Promise.all(files.map(async (file) => {
-    logInfo(`Loading resolver file: ${file}`)
+    logger.info(`Loading resolver file: ${file}`)
     return await import(file)
   }))
 }
@@ -33,7 +31,7 @@ const loadResolverPackages = async (files) => {
 const initializeResolvers = async (resolverType) => {
   // Generate resolver file pattern
   const resolverPattern = generateResolverPattern(resolverType)
-  logInfo(`Loading ${resolverType} resolvers from ${resolverPattern}`)
+  logger.info(`Loading ${resolverType} resolvers from ${resolverPattern}`)
 
   // Find resolver files matching the pattern
   const files = await glob(resolverPattern)

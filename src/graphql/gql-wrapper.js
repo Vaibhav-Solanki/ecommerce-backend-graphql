@@ -5,6 +5,7 @@
  * @returns {Function} - The wrapped resolver function.
  */
 import { GraphQLError } from 'graphql'
+import logger from '../utils/logger.js'
 
 export default function (resolver, isPrivate) {
   return async (...args) => {
@@ -26,7 +27,7 @@ export default function (resolver, isPrivate) {
       // Call the resolver function with request context and data
       return await resolver(...args)
     } catch (e) {
-      console.error(e)
+      logger.error(e)
       // If an error occurs during resolver execution, throw a GraphQL error with appropriate status code
       throw new GraphQLError(e.message, {
         extensions: {
