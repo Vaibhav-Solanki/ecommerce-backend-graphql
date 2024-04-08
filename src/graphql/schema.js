@@ -16,7 +16,9 @@ type Category {
 
 type Product {
     id: Int!
+    brand_id: Int
     brand: Brand
+    category_id: Int
     category: Category
     name: String!
     description: String
@@ -27,6 +29,7 @@ type Product {
 
 type ProductVariant {
     id: Int!
+    product_id: Int
     product: Product
     variant_name: String!
     variant_description: String
@@ -119,7 +122,6 @@ type Query {
     products(category_id: Int brand_id: Int): [Product]
     product(id: Int!): Product
     productVariants(id: Int product_id: Int): [ProductVariant]
-    addresses: [Address]
     address(id: Int!): Address
     customers: [Customer]
     customer(id: Int!): Customer
