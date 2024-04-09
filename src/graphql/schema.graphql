@@ -1,4 +1,3 @@
-export default `#graphql
 scalar DateTime
 
 type Brand {
@@ -183,4 +182,3 @@ type Mutation {
     updateReview(id: Int!, product_id: Int, customer_id: Int, rating: Int, review_text: String): Review
     deleteReview(id: Int!): Review
 }
-`
