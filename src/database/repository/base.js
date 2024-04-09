@@ -35,6 +35,16 @@ class BaseRepo {
     return load
   }
 
+  async findById (value) {
+    let load = this.getData('id', value)
+
+    if (!load) {
+      load = await this.findOneDirect('id', value)
+      this.setData('id', load)
+    }
+    return load
+  }
+
   async findOne (query) {
     return await this.model.query().findOne(query)
   }
@@ -90,10 +100,6 @@ class BaseRepo {
 
   chunks (arr, size = 1000) {
     return size ? [...Array(Math.ceil(arr.length / size))].map((_, i) => arr.slice(i * size, i * size + size)) : [arr]
-  }
-
-  async findById (id) {
-    return await this.model.query().findById(id)
   }
 
   async findOneGroup (group) {

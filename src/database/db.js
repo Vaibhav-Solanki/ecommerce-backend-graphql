@@ -5,7 +5,7 @@
 // Import necessary modules
 import knex from 'knex'
 import NodeCache from 'node-cache'
-import { db, redisUrl } from '../config/app-config.js'
+import { db } from '../config/app-config.js'
 import logger from '../utils/logger.js'
 
 const cacheClient = new NodeCache()

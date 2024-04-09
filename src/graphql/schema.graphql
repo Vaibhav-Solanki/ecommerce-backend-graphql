@@ -26,17 +26,8 @@ type Product {
     description: String
     price: Float!
     stock_quantity: Int!
+    reserved_quantity: Int!
     created_at: DateTime!
-}
-
-type ProductVariant {
-    id: Int!
-    product_id: Int
-    product: Product
-    variant_name: String!
-    variant_description: String
-    price: Float!
-    stock_quantity: Int!
 }
 
 type Address {
@@ -85,14 +76,26 @@ type OrderItem {
     unit_price: Float!
 }
 
-type Cart {
+type ValueDistribution{
+    type :String!
+    value:Float!
+}
+
+type CartItem {
     id: Int!
+    product_id: Int!
+    product: Product!
+    quantity: Int!
+    total_value: Float!
+    created_at: DateTime!
+}
+
+type Cart {
     customer_id: Int!
     customer: Customer
-    product_id: Int!
-    product: Product
-    quantity: Int!
-    created_at: DateTime!
+    cart_items: [CartItem!]!
+    value_distribution: [ValueDistribution]
+    total_value: Float!
 }
 
 type OrderPayment {
@@ -149,10 +152,6 @@ type Mutation {
     createProduct(brand_id: Int!, category_id: Int!, name: String!, description: String, price: Float!, stock_quantity: Int!): Product
     updateProduct(id: Int!, brand_id: Int, category_id: Int, name: String, description: String, price: Float, stock_quantity: Int): Product
     deleteProduct(id: Int!): Product
-
-    createProductVariant(product_id: Int!, variant_name: String!, variant_description: String, price: Float!, stock_quantity: Int!): ProductVariant
-    updateProductVariant(id: Int!, product_id: Int, variant_name: String, variant_description: String, price: Float, stock_quantity: Int): ProductVariant
-    deleteProductVariant(id: Int!): ProductVariant
 
     createAddress(customer_id: Int!, address_line1: String!, address_line2: String, city: String!, state: String!, country: String!, postal_code: String!): Address
     updateAddress(id: Int!, customer_id: Int, address_line1: String, address_line2: String, city: String, state: String, country: String, postal_code: String): Address

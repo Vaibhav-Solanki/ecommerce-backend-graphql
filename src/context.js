@@ -30,7 +30,7 @@ export async function middleware ({ request }) {
     // Verifying user token
     const decoded = await context.auth.verifyIdToken(token)
     if (decoded.id) {
-      user.identity = await repo.findUserById(decoded.id)
+      user.identity = await repo.findById(decoded.id)
     } else {
       user.identity = await repo.registerUser(decoded)
       await context.auth.setCustomUserClaims(user.identity.uid, { id: user.identity.id })
