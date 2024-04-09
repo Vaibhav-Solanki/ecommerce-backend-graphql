@@ -4,13 +4,11 @@
 
 // Import necessary modules
 import knex from 'knex'
-import { createClient } from 'redis'
+import NodeCache from 'node-cache'
 import { db, redisUrl } from '../config/app-config.js'
 import logger from '../utils/logger.js'
 
-const cacheClient = await createClient({ url: redisUrl })
-  .on('error', err => logger.error('Redis Client Error', err))
-  .connect()
+const cacheClient = new NodeCache()
 
 // Initialize Knex client with database configuration and snake case mappers
 export const client = knex(db)

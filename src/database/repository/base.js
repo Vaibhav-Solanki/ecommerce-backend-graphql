@@ -11,16 +11,14 @@ class BaseRepo {
 
   static DEFAULT_TZ = 'Asia/Kolkata'
 
-  async setData (key, value) {
+  setData (key, value) {
     const cacheKey = `${this.entityName}-${key}-${value[key]}`
-    const load = JSON.stringify(value)
-    return await this.cacheClient.set(cacheKey, load)
+    return this.cacheClient.set(cacheKey, value)
   };
 
-  async getData (key, identity) {
+  getData (key, identity) {
     const cacheKey = `${this.entityName}-${key}-${identity}`
-    const load = await this.cacheClient.get(cacheKey)
-    return JSON.parse(load)
+    return this.cacheClient.get(cacheKey)
   };
 
   async findOneDirect (key, value) {
@@ -28,11 +26,11 @@ class BaseRepo {
   }
 
   async findOneCached (key, value) {
-    let load = await this.getData(key, value)
+    let load = this.getData(key, value)
 
     if (!load) {
       load = await this.findOneDirect(key, value)
-      await this.setData(key, load)
+      this.setData(key, load)
     }
     return load
   }
