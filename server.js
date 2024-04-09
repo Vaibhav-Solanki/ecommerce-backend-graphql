@@ -1,5 +1,5 @@
-import { ApolloServer } from '@apollo/server'
-import { startStandaloneServer } from '@apollo/server/standalone'
+import { createSchema, createYoga } from 'graphql-yoga'
+import { createServer } from 'node:http'
 
 import './src/config/app-config.js'
 import './src/firebase.js'
@@ -9,20 +9,19 @@ import typeDefs from './src/graphql/schema.js' // Importing GraphQL schema
 import resolvers from './src/graphql/resolvers.js' // Importing GraphQL resolvers
 import logger from './src/utils/logger.js'
 
-// Creating an ApolloServer instance
-const server = new ApolloServer({
-  typeDefs, // GraphQL schema
-  resolvers, // GraphQL resolvers
-  formatError: (formattedError) => {
-    // Formatting the error for response
-    return { message: formattedError.message, code: formattedError.extensions.code }
-  }
-})
-
-// Starting the standalone server
-const { url } = await startStandaloneServer(server, {
-  listen: { port: process.env.PORT }, // Listening port
+// Create a Yoga instance with a GraphQL schema.
+const yoga = createYoga({
+  schema: createSchema({
+    typeDefs,
+    resolvers
+  }),
   context
 })
 
-logger.info(`🚀  Server ready at: ${url}`) // Logging server URL
+// Pass it into a server to hook into request handlers.
+const server = createServer(yoga)
+
+// Start the server and you're done!
+server.listen(process.env.PORT, () => {
+  logger.info(`🚀  Server ready at http://localhost:${process.env.PORT}/graphql`) // Logging server URL
+})

@@ -61,23 +61,22 @@ const initializeResolvers = async (resolverType) => {
 
 // Define resolver types
 const resolverTypes = {
-  'Query': false,
-  'Mutation': false,
-  'Type': true,
-  'Scalar': true
+  Query: false,
+  Mutation: false,
+  Type: true,
+  Scalar: true
 }
 // Initialize an object to store resolvers organized by type
-let typeResolvers = {}
+const typeResolvers = {}
 
 // Load all resolvers for each resolver type
 async function loadAllResolvers () {
-
   for (const resolverType of Object.keys(resolverTypes)) {
     const resolvers = await initializeResolvers(resolverType.toLowerCase())
 
-    if(resolverTypes[resolverType]){
-      Object.assign(typeResolvers,resolvers)
-    }else {
+    if (resolverTypes[resolverType]) {
+      Object.assign(typeResolvers, resolvers)
+    } else {
       typeResolvers[resolverType] = resolvers
     }
   }

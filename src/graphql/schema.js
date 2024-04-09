@@ -118,6 +118,7 @@ type Review {
 }
 
 type Query {
+    Ping: String
     brands: [Brand]
     brand(id: Int!): Brand
     categories: [Category]

@@ -12,12 +12,12 @@ import logger from './utils/logger.js'
 // Export the database connection, app, and auth module
 export const context = { dal, app, auth, logger }
 
-export async function middleware ({ req }) {
+export async function middleware ({ request }) {
   // Custom context function to handle authorization
   const repo = await dal.getRepo('customers')
 
   // get the user token from the headers
-  const token = req.headers.authorization
+  const token = request.headers.get('authorization')
   const user = {
     identity: {},
     decoded: {},
