@@ -22,18 +22,9 @@ export const up = function (knex) {
         table.string('name', 100).notNullable()
         table.text('description')
         table.decimal('price', 10, 2).notNullable()
-        table.integer('stock_quantity').notNullable()
+        table.integer('stock_quantity').defaultTo(0).notNullable()
+        table.integer('reserved_quantity').defaultTo(0).notNullable()
         table.timestamp('created_at').defaultTo(knex.fn.now())
-      })
-    })
-    .then(function () {
-      return knex.schema.createTable('product_variants', function (table) {
-        table.increments('id').primary()
-        table.integer('product_id').unsigned().references('id').inTable('products')
-        table.string('variant_name', 100).notNullable()
-        table.text('variant_description')
-        table.decimal('price', 10, 2).notNullable()
-        table.integer('stock_quantity').notNullable()
       })
     })
     .then(function () {
@@ -134,9 +125,6 @@ export const down = function (knex) {
     })
     .then(function () {
       return knex.schema.dropTableIfExists('customers')
-    })
-    .then(function () {
-      return knex.schema.dropTableIfExists('product_variants')
     })
     .then(function () {
       return knex.schema.dropTableIfExists('products')
