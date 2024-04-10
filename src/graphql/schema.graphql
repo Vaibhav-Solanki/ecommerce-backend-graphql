@@ -1,5 +1,11 @@
 scalar DateTime
 
+enum PaymentStatus{
+    Received
+    Pending
+    Requested
+}
+
 type OpResult {
     result: Boolean!
     code: Int
@@ -76,6 +82,7 @@ type Order {
     shipping_address_id: Int!
     shipping_address: Address
     payment_method: String
+    payment_status: PaymentStatus!
     order_items: [OrderItem]
 }
 

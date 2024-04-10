@@ -9,6 +9,12 @@ class Order extends BaseModel {
     return 'id'
   }
 
+  static paymentStatusMap = {
+    0: 'Requested',
+    1: 'Received',
+    2: 'Pending',
+  }
+
   static get jsonSchema () {
     return {
       type: 'object',
