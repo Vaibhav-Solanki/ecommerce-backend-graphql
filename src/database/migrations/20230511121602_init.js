@@ -28,6 +28,14 @@ export const up = function (knex) {
       })
     })
     .then(function () {
+      return knex.schema.createTable('product_images', function (table) {
+        table.increments('id').primary()
+        table.integer('product_id').unsigned().references('id').inTable('products')
+        table.string('url')
+        table.timestamp('created_at').defaultTo(knex.fn.now())
+      })
+    })
+    .then(function () {
       return knex.schema.createTable('customers', function (table) {
         table.increments('id').primary()
         table.string('name', 50)
@@ -127,6 +135,8 @@ export const down = function (knex) {
       return knex.schema.dropTableIfExists('customers')
     })
     .then(function () {
+      return knex.schema.dropTableIfExists('product_images')
+    }).then(function () {
       return knex.schema.dropTableIfExists('products')
     })
     .then(function () {
