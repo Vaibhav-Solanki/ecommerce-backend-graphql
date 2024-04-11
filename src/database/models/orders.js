@@ -26,7 +26,8 @@ class Order extends BaseModel {
         status: { type: 'string' },
         shipping_address_id: { type: 'integer' },
         payment_method: { type: 'string' },
-        value_distribution: { type: 'array' }
+        value_distribution: { type: 'array' },
+        created_at: { type: 'string', format: 'date-time'}
       }
     }
   }

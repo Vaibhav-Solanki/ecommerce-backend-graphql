@@ -34,7 +34,8 @@ class Address extends BaseModel {
         city: { type: 'string' },
         state: { type: 'string' },
         country: { type: 'string' },
-        postal_code: { type: 'string' }
+        postal_code: { type: 'string' },
+        created_at: { type: 'string', format: 'date-time'}
       }
     }
   }

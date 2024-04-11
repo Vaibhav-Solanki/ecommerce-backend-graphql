@@ -16,7 +16,8 @@ class Category extends BaseModel {
         id: { type: 'integer' },
         name: { type: 'string' },
         description: { type: 'string' },
-        parent_category_id: { type: 'integer' }
+        parent_category_id: { type: 'integer' },
+        created_at: { type: 'string', format: 'date-time'}
       }
     }
   }

@@ -5,6 +5,7 @@ export const up = function (knex) {
       table.string('name', 100).notNullable()
       table.text('description')
       table.string('website', 255)
+      table.timestamp('created_at').defaultTo(knex.fn.now())
     })
     .then(function () {
       return knex.schema.createTable('categories', function (table) {
@@ -12,6 +13,7 @@ export const up = function (knex) {
         table.string('name', 100).notNullable()
         table.text('description')
         table.integer('parent_category_id').unsigned().references('id').inTable('categories')
+        table.timestamp('created_at').defaultTo(knex.fn.now())
       })
     })
     .then(function () {
@@ -56,6 +58,7 @@ export const up = function (knex) {
         table.string('state', 100).notNullable()
         table.string('country', 100).notNullable()
         table.string('postal_code', 20).notNullable()
+        table.timestamp('created_at').defaultTo(knex.fn.now())
       })
     })
     .then(function () {
@@ -68,6 +71,7 @@ export const up = function (knex) {
         table.integer('shipping_address_id').unsigned().references('id').inTable('addresses')
         table.string('payment_method', 50)
         table.jsonb('value_distribution')
+        table.timestamp('created_at').defaultTo(knex.fn.now())
       })
     })
     .then(function () {
@@ -77,6 +81,7 @@ export const up = function (knex) {
         table.integer('product_id').unsigned().references('id').inTable('products')
         table.integer('quantity').notNullable()
         table.decimal('unit_price', 10, 2).notNullable()
+        table.timestamp('created_at').defaultTo(knex.fn.now())
       })
     })
     .then(function () {
@@ -96,6 +101,7 @@ export const up = function (knex) {
         table.timestamp('payment_date').defaultTo(knex.fn.now())
         table.string('payment_status', 20).notNullable()
         table.string('payment_method', 50)
+        table.timestamp('created_at').defaultTo(knex.fn.now())
       })
     })
     .then(function () {

@@ -16,7 +16,8 @@ class Brand extends BaseModel {
         id: { type: 'integer' },
         name: { type: 'string' },
         description: { type: 'string' },
-        website: { type: 'string' }
+        website: { type: 'string' },
+        created_at: { type: 'string' }
       }
     }
   }
