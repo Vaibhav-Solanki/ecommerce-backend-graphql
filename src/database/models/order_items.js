@@ -18,7 +18,7 @@ class OrderItem extends BaseModel {
         product_id: { type: 'integer' },
         quantity: { type: 'integer' },
         unit_price: { type: 'number' },
-        created_at: { type: 'string', format: 'date-time'}
+        created_at: { type: 'string', format: 'date-time' }
       }
     }
   }

@@ -28,7 +28,7 @@ class Order extends BaseModel {
         payment_method: { type: 'string' },
         payment_status: { type: 'integer' },
         value_distribution: { type: 'array' },
-        created_at: { type: 'string', format: 'date-time'}
+        created_at: { type: 'string', format: 'date-time' }
       }
     }
   }

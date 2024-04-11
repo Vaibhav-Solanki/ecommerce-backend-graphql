@@ -35,7 +35,7 @@ class Address extends BaseModel {
         state: { type: 'string' },
         country: { type: 'string' },
         postal_code: { type: 'string' },
-        created_at: { type: 'string', format: 'date-time'}
+        created_at: { type: 'string', format: 'date-time' }
       }
     }
   }

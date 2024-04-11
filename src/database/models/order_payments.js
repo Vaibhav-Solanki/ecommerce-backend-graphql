@@ -19,7 +19,7 @@ class OrderPayment extends BaseModel {
         payment_date: { type: 'string', format: 'date-time' },
         payment_status: { type: 'string' },
         payment_method: { type: 'string' },
-        created_at: { type: 'string', format: 'date-time'}
+        created_at: { type: 'string', format: 'date-time' }
       }
     }
   }

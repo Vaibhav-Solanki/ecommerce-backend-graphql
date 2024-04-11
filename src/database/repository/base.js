@@ -35,7 +35,7 @@ class BaseRepo {
     return load
   }
 
-  async findGroup(entity){
+  async findGroup (entity) {
     return await this.model.query().select('*').where(entity)
   }
 
