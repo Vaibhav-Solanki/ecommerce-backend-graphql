@@ -48,7 +48,7 @@ export async function resolver (parent, args, contextValue, info) {
   }
 
   await ordersRepo.insertGraph(orderData)
-  await cartsRepo.flushCartByCustomer(customerId)
+  await cartsRepo.delete({ customer_id: customerId })
 
   return { message: 'success', result: true, code: 201 }
 }

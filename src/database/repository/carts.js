@@ -5,10 +5,6 @@ class CartRepo extends Base {
     return await this.model.query().select('*').where('customer_id', customerId)
   }
 
-  async flushCartByCustomer (customerId) {
-    return await this.model.query().where('customer_id', customerId).del()
-  }
-
   async addToCart (customerId, productId, quantity) {
     const cartItem = await this.model.query().first('*').where({ customer_id: customerId, product_id: productId })
 

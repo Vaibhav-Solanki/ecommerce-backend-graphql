@@ -11,6 +11,18 @@ class BaseRepo {
 
   static DEFAULT_TZ = 'Asia/Kolkata'
 
+  getKeyByObject ({ id }) {
+    return `${this.entityName}-id-${id}`
+  }
+
+  getKeyById (id) {
+    return `${this.entityName}-id-${id}`
+  }
+
+  getKeyByQuery (query) {
+    return query.map(el => `${this.entityName}-id-${el.id}`)
+  }
+
   setData (key, value) {
     const cacheKey = `${this.entityName}-${key}-${value[key]}`
     return this.cacheClient.set(cacheKey, value)
@@ -117,31 +129,48 @@ class BaseRepo {
   }
 
   async findAll (column = 'id', order = 'desc') {
-    return await this.model.query().orderBy(column, order)
+    const load = await this.model.query().orderBy(column, order)
+    load.map(el => this.setData('id', el))
+    return load
   }
 
   async insert (entity) {
-    return await this.model.query().insertAndFetch(entity)
+    const load = await this.model.query().insertAndFetch(entity)
+    if (Array.isArray(load)) {
+      load.map(el => this.setData('id', el))
+    } else {
+      this.setData('id', load)
+    }
+    return load
   }
 
   async insertGraph (entity) {
-    return await this.model.query().insertGraph(entity)
+    const load = await this.model.query().insertGraph(entity)
+    this.cacheClient.flushAll()
+    return load
   }
 
   async update (entity, update) {
-    return await this.model.query().update(update).where(entity)
+    const load = await this.model.query().returning('*').update(update).where(entity)
+    load.map(el => this.setData('id', el))
+    return load
   }
 
-  updateAndFetch (Model, entity) {
-    return Model.$query().updateAndFetch(entity)
+  async updateAndFetch (Model, entity) {
+    const load = await Model.$query().updateAndFetch(entity)
+    this.setData('id', load)
+    return load
   }
 
   async delete (entity) {
-    return await this.model.query().delete().where(entity)
+    const query = await this.model.query().select('id').where(entity)
+    this.cacheClient.del(this.getKeyByQuery(query))
+    return await Promise.all(query.map(op => op.$query().del()))
   }
 
   async deleteById (id) {
-    return await this.model.query().delete().where({ id })
+    this.cacheClient.del(this.getKeyById(id))
+    return await this.model.deleteById(id)
   }
 
   getTimestamp (dateTime) {
