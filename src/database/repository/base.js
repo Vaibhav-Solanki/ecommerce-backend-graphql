@@ -35,6 +35,10 @@ class BaseRepo {
     return load
   }
 
+  async findGroup(entity){
+    return await this.model.query().select('*').where(entity)
+  }
+
   async findById (value) {
     let load = this.getData('id', value)
 

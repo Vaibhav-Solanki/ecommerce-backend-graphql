@@ -70,6 +70,7 @@ export const up = function (knex) {
         table.string('status', 20).notNullable()
         table.integer('shipping_address_id').unsigned().references('id').inTable('addresses')
         table.string('payment_method', 50)
+        table.integer('payment_status').defaultTo(0)
         table.jsonb('value_distribution')
         table.timestamp('created_at').defaultTo(knex.fn.now())
       })

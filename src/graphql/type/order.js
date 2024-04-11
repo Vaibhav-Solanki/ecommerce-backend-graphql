@@ -11,8 +11,7 @@ export const resolver = {
     const { dal } = contextValue.context
 
     const repo = await dal.getRepo('order_items')
-    if (parent.order_id) return await repo.findById(parent.order_id)
-    return []
+    return await repo.findOrderItems(parent.id)
   },
   async shipping_address (parent, args, contextValue) {
     const { dal } = contextValue.context
