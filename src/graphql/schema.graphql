@@ -172,7 +172,7 @@ type Mutation {
 
     updateCustomer(first_name: String, last_name: String, email: String, password: String): OpResult
 
-    placeOrder(shipping_address_id: Int!, payment_method: PaymentType): Order
+    placeOrder(shipping_address_id: Int!, payment_method: PaymentType): OpResult
 
     addToCart(product_id: Int!, quantity: Int!): OpResult
 

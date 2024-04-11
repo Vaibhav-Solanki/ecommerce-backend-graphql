@@ -11,6 +11,13 @@ class ProductRepo extends Base {
   async findProductByBrand (brandId) {
     return await this.model.query().where('brand_id', brandId)
   }
+
+  reserveStock (product, qty) {
+    return product.$query().updateAndFetch({
+      stock_quantity: product.stock_quantity - qty,
+      reserved_quantity: product.reserved_quantity + qty
+    })
+  }
 }
 
 export default ProductRepo

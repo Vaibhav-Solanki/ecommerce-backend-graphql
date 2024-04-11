@@ -8,7 +8,6 @@ export async function resolver (parent, args, contextValue, info) {
   const { dal } = context
   const cartsRepo = await dal.getRepo('carts')
   const ordersRepo = await dal.getRepo('orders')
-  const orderItemsRepo = await dal.getRepo('order_items')
   const addressesRepo = await dal.getRepo('addresses')
   const productRepo = await dal.getRepo('products')
 
@@ -31,7 +30,8 @@ export async function resolver (parent, args, contextValue, info) {
 
     productValue += (cartItem.quantity * product.price)
 
-    orderItems.push({ product_id: product.id, quantity: cartItem.quantity, unit_price: product.price })
+    await productRepo.reserveStock(product, cartItem.quantity)
+    orderItems.push({ product_id: product.id, quantity: cartItem.quantity, unit_price: Number(product.price) })
   }
 
   const { totalAmount, valueDistribution } = calculateValueDistribution(productValue, 0, 50, 18)
@@ -47,9 +47,8 @@ export async function resolver (parent, args, contextValue, info) {
     order_items: orderItems
   }
 
-  const order = await ordersRepo.insertGraph(orderData)
-
-  console.log(order)
+  await ordersRepo.insertGraph(orderData)
+  await cartsRepo.flushCartByCustomer(customerId)
 
   return { message: 'success', result: true, code: 201 }
 }

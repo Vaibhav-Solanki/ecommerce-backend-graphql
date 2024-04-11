@@ -119,7 +119,7 @@ class BaseRepo {
   }
 
   async update (entity, update) {
-    return await this.model.update(update).where(entity)
+    return await this.model.query().update(update).where(entity)
   }
 
   async delete (entity) {

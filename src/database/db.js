@@ -19,17 +19,22 @@ const composeEntityRepoFilename = entity => `./repository/${entity}.js`
 const modelMap = new Map()
 const repoMap = new Map()
 
-export const getModel = async (entity) => {
+export const getModel = (entity) => {
   const model = modelMap.get(entity)
   if (model) {
     return model
   } else {
-    const filename = composeEntityModelFilename(entity)
-    logger.info(`Loading model file: ${filename}`)
-    const { default: model } = await import(filename)
-    model.knex(client)
-    modelMap.set(entity, model)
-    return model
+    return new Promise((resolve, reject) => {
+      const filename = composeEntityModelFilename(entity)
+      logger.info(`Loading model file: ${filename}`)
+      import(filename)
+        .then(({ default: model }) => {
+          model.knex(client)
+          modelMap.set(entity, model)
+          resolve(model)
+        })
+        .catch(reject)
+    })
   }
 }
 
@@ -47,3 +52,20 @@ export const getRepo = async (entityName) => {
     return repo
   }
 }
+
+const repoList = [
+  'order_payments',
+  'addresses',
+  'brands',
+  'carts',
+  'categories',
+  'customers',
+  'order_items',
+  'orders',
+  'product_images',
+  'products',
+  'reviews'
+]
+
+// preload
+repoList.map(repo => getRepo(repo))

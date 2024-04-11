@@ -31,10 +31,11 @@ class Order extends BaseModel {
     }
   }
 
-static get relationMappings () {
+  static get relationMappings () {
     const Customer = this.getModel('customers')
     const Address = this.getModel('addresses')
     const OrderItem = this.getModel('order_items')
+
     return {
       customer: {
         relation: BaseModel.BelongsToOneRelation,
