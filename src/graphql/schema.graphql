@@ -86,7 +86,7 @@ type Order {
     id: Int!
     customer_id: Int!
     customer: Customer
-    order_date: String!
+    order_date: DateTime
     total_amount: Float!
     status: String!
     shipping_address_id: Int!
@@ -136,7 +136,7 @@ type OrderPayment {
     order_id: Int!
     order: Order
     amount: Float!
-    payment_date: String!
+    payment_date: DateTime
     payment_status: String!
     payment_method: PaymentType
     created_at: DateTime
