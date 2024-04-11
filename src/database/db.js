@@ -8,7 +8,7 @@ import NodeCache from 'node-cache'
 import { db } from '../config/app-config.js'
 import logger from '../utils/logger.js'
 
-const cacheClient = new NodeCache()
+export const cacheClient = new NodeCache()
 
 // Initialize Knex client with database configuration and snake case mappers
 export const client = knex(db)

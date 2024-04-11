@@ -178,7 +178,7 @@ type Mutation {
     createAddress(address_line1: String!, address_line2: String, city: String!, state: String!, country: String!, postal_code: String!): Address
     updateAddress(id: Int!, address_line1: String, address_line2: String, city: String, state: String, country: String, postal_code: String): OpResult
 
-    updateCustomer(name: String, picture: String): OpResult
+    updateCustomer(name: String, picture: String): Customer
 
     placeOrder(shipping_address_id: Int!, payment_method: PaymentType): OpResult
 
@@ -186,4 +186,6 @@ type Mutation {
     saveFile(file: File!): String
 
     createReview(product_id: Int!, rating: Int!, review_text: String): Review
+
+    flushAll: Boolean
 }

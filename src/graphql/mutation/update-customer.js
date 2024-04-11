@@ -7,7 +7,5 @@ export async function resolver (parent, args, contextValue, info) {
   const { dal } = context
   const repo = await dal.getRepo('customers')
 
-  const id = user.identity.id
-
-  return await repo.update({ id }, args)
+  return await repo.updateAndFetch(user.identity, args)
 }

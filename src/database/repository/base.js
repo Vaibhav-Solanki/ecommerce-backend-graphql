@@ -35,6 +35,12 @@ class BaseRepo {
     return load
   }
 
+  async selectOp (query) {
+    const rows = await query
+    rows.forEach(row => this.setData('id', row))
+    return rows
+  }
+
   async findGroup (entity) {
     return await this.model.query().select('*').where(entity)
   }
@@ -124,6 +130,10 @@ class BaseRepo {
 
   async update (entity, update) {
     return await this.model.query().update(update).where(entity)
+  }
+
+  updateAndFetch (Model, entity) {
+    return Model.$query().updateAndFetch(entity)
   }
 
   async delete (entity) {

@@ -13,7 +13,7 @@ export async function resolver (parent, args, contextValue, info) {
   }
 
   const extension = file.name.split('.').pop()
-  const fileName = `${context.uuidv4()}.${extension}`
+  const fileName = `${context.uuid()}.${extension}`
 
   const fileArrayBuffer = await file.arrayBuffer()
 
