@@ -1,3 +1,5 @@
+import calculateValueDistribution from '../../utils/tax.js'
+
 export const name = 'cart'
 
 export const auth = true
@@ -11,12 +13,6 @@ export async function resolver (parent, args, contextValue) {
 
   const customerId = user.identity.id
   let productValue = 0
-  const valueDistribution = [
-    {
-      type: 'Delivery Charges',
-      value: 25
-    }
-  ]
 
   const cartItems = await repo.findCartByCustomer(customerId)
 
@@ -26,16 +22,11 @@ export async function resolver (parent, args, contextValue) {
     productValue += cartItems[index].total_value
   }
 
-  valueDistribution.push({
-    type: 'Product Total',
-    value: productValue
-  })
-
-  const totalValue = valueDistribution.reduce((sum, cur) => sum + cur.value, 0)
+  const { totalAmount, valueDistribution } = calculateValueDistribution(productValue, 0, 50, 18)
 
   return {
     customer_id: customerId,
-    total_value: totalValue,
+    total_value: totalAmount,
     cart_items: cartItems,
     value_distribution: valueDistribution
   }

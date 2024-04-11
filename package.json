@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "node server.js",
-    "dev": "nodemon server.js",
+    "dev": "NODE_ENV=local nodemon server.js",
     "lintfix": "eslint --fix ./ "
   },
   "repository": {

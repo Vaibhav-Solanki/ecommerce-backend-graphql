@@ -114,12 +114,20 @@ class BaseRepo {
     return await this.model.query().insertAndFetch(entity)
   }
 
+  async insertGraph (entity) {
+    return await this.model.query().insertGraph(entity)
+  }
+
   async update (entity, update) {
     return await this.model.update(update).where(entity)
   }
 
   async delete (entity) {
     return await this.model.query().delete().where(entity)
+  }
+
+  async deleteById (id) {
+    return await this.model.query().delete().where({ id })
   }
 
   getTimestamp (dateTime) {

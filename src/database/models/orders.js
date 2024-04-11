@@ -12,7 +12,7 @@ class Order extends BaseModel {
   static paymentStatusMap = {
     0: 'Requested',
     1: 'Received',
-    2: 'Pending',
+    2: 'Pending'
   }
 
   static get jsonSchema () {
@@ -25,12 +25,13 @@ class Order extends BaseModel {
         total_amount: { type: 'number' },
         status: { type: 'string' },
         shipping_address_id: { type: 'integer' },
-        payment_method: { type: 'string' }
+        payment_method: { type: 'string' },
+        value_distribution: { type: 'array' }
       }
     }
   }
 
-  static get relationMappings () {
+static get relationMappings () {
     const Customer = this.getModel('customers')
     const Address = this.getModel('addresses')
     const OrderItem = this.getModel('order_items')
@@ -55,8 +56,8 @@ class Order extends BaseModel {
         relation: BaseModel.HasManyRelation,
         modelClass: OrderItem,
         join: {
-          from: 'orders.order_id',
-          to: 'order_items.id'
+          from: 'orders.id',
+          to: 'order_items.order_id'
         }
       }
     }

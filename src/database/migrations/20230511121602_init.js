@@ -67,6 +67,7 @@ export const up = function (knex) {
         table.string('status', 20).notNullable()
         table.integer('shipping_address_id').unsigned().references('id').inTable('addresses')
         table.string('payment_method', 50)
+        table.jsonb('value_distribution')
       })
     })
     .then(function () {
