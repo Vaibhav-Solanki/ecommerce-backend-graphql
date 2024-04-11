@@ -142,7 +142,7 @@ type Review {
     customer: Customer
     rating: Int
     review_text: String
-    review_date: String!
+    review_date: DateTime
 }
 
 type Query {
@@ -168,7 +168,7 @@ type Query {
 
 type Mutation {
     createAddress(address_line1: String!, address_line2: String, city: String!, state: String!, country: String!, postal_code: String!): Address
-    updateAddress(id: Int!, customer_id: Int, address_line1: String, address_line2: String, city: String, state: String, country: String, postal_code: String): OpResult
+    updateAddress(id: Int!, address_line1: String, address_line2: String, city: String, state: String, country: String, postal_code: String): OpResult
 
     updateCustomer(first_name: String, last_name: String, email: String, password: String): OpResult
 
@@ -176,5 +176,5 @@ type Mutation {
 
     addToCart(product_id: Int!, quantity: Int!): OpResult
 
-    createReview(product_id: Int!, customer_id: Int!, rating: Int!, review_text: String): Review
+    createReview(product_id: Int!, rating: Int!, review_text: String): Review
 }

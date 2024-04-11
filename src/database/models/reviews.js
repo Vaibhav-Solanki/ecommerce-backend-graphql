@@ -20,7 +20,7 @@ class Review extends BaseModel {
         review_text: { type: 'string' },
         review_date: { type: 'string', format: 'date-time' }
       },
-      required: ['product_id', 'customer_id', 'rating', 'review_date']
+      required: ['product_id', 'customer_id', 'rating']
     }
   }
 
