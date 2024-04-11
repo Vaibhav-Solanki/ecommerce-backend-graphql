@@ -1,8 +1,8 @@
 import BaseModel from './base.js'
 
-class ProductImages extends BaseModel {
+class Files extends BaseModel {
   static get tableName () {
-    return 'product_images'
+    return 'files'
   }
 
   static get idColumn () {
@@ -14,7 +14,9 @@ class ProductImages extends BaseModel {
       type: 'object',
       properties: {
         id: { type: 'integer' },
-        product_id: { type: 'integer' },
+        customer_id: { type: 'integer' },
+        file: { type: 'string' },
+        file_type: { type: 'string' },
         url: { type: 'string' },
         created_at: { type: 'string', format: 'date-time' }
       }
@@ -22,18 +24,18 @@ class ProductImages extends BaseModel {
   }
 
   static get relationMappings () {
-    const Products = this.getModel('products')
+    const Customer = this.getModel('customers')
     return {
-      brand: {
+      customer: {
         relation: BaseModel.BelongsToOneRelation,
-        modelClass: Products,
+        modelClass: Customer,
         join: {
-          from: 'product_images.product_id',
-          to: 'products.id'
+          from: 'files.customer_id',
+          to: 'customers.id'
         }
       }
     }
   }
 }
 
-export default ProductImages
+export default Files

@@ -64,7 +64,8 @@ const repoList = [
   'orders',
   'product_images',
   'products',
-  'reviews'
+  'reviews',
+  'files'
 ]
 
 // preload

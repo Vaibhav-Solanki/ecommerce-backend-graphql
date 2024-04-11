@@ -8,9 +8,11 @@ import * as dal from './database/db.js'
 // Import the Firebase app and authentication module
 import { app, auth } from './firebase.js'
 import logger from './utils/logger.js'
+import imagekit from './storage/image-kit.js'
+import { v4 as uuidv4 } from 'uuid'
 
 // Export the database connection, app, and auth module
-export const context = { dal, app, auth, logger }
+export const context = { dal, app, auth, logger, imagekit, uuidv4 }
 
 export async function middleware ({ request }) {
   // Custom context function to handle authorization

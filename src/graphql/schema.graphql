@@ -1,4 +1,5 @@
 scalar DateTime
+scalar File
 
 enum PaymentStatus{
     Received
@@ -175,6 +176,7 @@ type Mutation {
     placeOrder(shipping_address_id: Int!, payment_method: PaymentType): OpResult
 
     addToCart(product_id: Int!, quantity: Int!): OpResult
+    saveFile(file: File!): String
 
     createReview(product_id: Int!, rating: Int!, review_text: String): Review
 }
