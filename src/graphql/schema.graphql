@@ -77,7 +77,6 @@ type Customer {
     picture: String
     email: String!
     uid: String!
-    password: String
     created_at: DateTime!
     addresses: [Address]
 }
@@ -188,4 +187,8 @@ type Mutation {
     createReview(product_id: Int!, rating: Int!, review_text: String): Review
 
     flushAll: Boolean
+}
+
+type Subscription {
+    countdown(from: Int!): Int!
 }

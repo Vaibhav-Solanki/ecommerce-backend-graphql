@@ -63,6 +63,7 @@ const initializeResolvers = async (resolverType) => {
 const resolverTypes = {
   Query: false,
   Mutation: false,
+  Subscription: false,
   Type: true,
   Scalar: true
 }
