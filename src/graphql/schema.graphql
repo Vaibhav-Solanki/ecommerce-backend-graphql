@@ -156,7 +156,7 @@ type Query {
     Ping: String
     brands: [Brand]
     brand(id: Int!): Brand
-    categories: [Category]
+    categories(level: Int): [Category]
     category(id: Int!): Category
     products(category_id: Int brand_id: Int): [Product]
     product(id: Int!): Product
