@@ -5,7 +5,7 @@ export const resolver = {
     const { dal } = contextValue.context
 
     const repo = await dal.getRepo('categories')
-    if (parent.parent_category_id) return await repo.findById(parent.customer_id)
+    if (parent?.parent_category_id) return await repo.findById(parent.parent_category_id)
     return null
   }
 }
