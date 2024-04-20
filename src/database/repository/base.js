@@ -33,20 +33,6 @@ class BaseRepo {
     return this.cacheClient.get(cacheKey)
   };
 
-  async findOneDirect (key, value) {
-    return await this.model.query().findOne(key, value)
-  }
-
-  async findOneCached (key, value) {
-    let load = this.getData(key, value)
-
-    if (!load) {
-      load = await this.findOneDirect(key, value)
-      this.setData(key, load)
-    }
-    return load
-  }
-
   async selectOp (query) {
     const rows = await query
     rows.forEach(row => this.setData('id', row))
@@ -62,7 +48,7 @@ class BaseRepo {
     let load = this.getData('id', value)
 
     if (!load) {
-      load = await this.findOneDirect('id', value)
+      load = await this.findOne({ id: value })
       this.setData('id', load)
     }
     return load
@@ -134,13 +120,9 @@ class BaseRepo {
     return size ? [...Array(Math.ceil(arr.length / size))].map((_, i) => arr.slice(i * size, i * size + size)) : [arr]
   }
 
-  async findOneGroup (group) {
-    return await this.model.query().findOne(group)
-  }
-
   async findAll (column = 'id', order = 'desc') {
     const load = await this.model.query().select('id').orderBy(column, order)
-    return this.findAllIds(load.map(row => row.id))
+    return await this.findAllIds(load.map(row => row.id))
   }
 
   async insert (entity) {

@@ -8,5 +8,5 @@ export async function resolver (parent, args, contextValue) {
   const { dal } = contextValue.context
   const repo = await dal.getRepo('order_payments')
 
-  return await repo.findByOrderId(orderId)
+  return await repo.findOne({ order_id: orderId })
 }

@@ -14,7 +14,7 @@ export async function resolver (parent, args, contextValue, info) {
   const customerId = user.identity.id
   const { shipping_address_id: shippingAddressId, payment_method: paymentMethod } = args
 
-  const cartItems = await cartsRepo.findCartByCustomer(customerId)
+  const cartItems = await cartsRepo.findGroup({ customer_id: customerId })
   if (!cartItems?.length) throw new Error('Cart not found')
 
   const address = await addressesRepo.findById(shippingAddressId)

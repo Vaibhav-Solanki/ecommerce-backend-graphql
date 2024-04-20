@@ -5,6 +5,6 @@ export const resolver = {
     const { dal } = contextValue.context
 
     const repo = await dal.getRepo('addresses')
-    return await repo.findAddressByCustomerId(parent.id)
+    return await repo.findGroup({ customer_id: parent.id })
   }
 }

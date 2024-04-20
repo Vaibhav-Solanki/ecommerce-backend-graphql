@@ -19,6 +19,6 @@ export const resolver = {
     const { dal } = contextValue.context
 
     const repo = await dal.getRepo('product_images')
-    return await repo.findByProductId(parent.id)
+    return await repo.findGroup({ product_id: parent.id })
   }
 }

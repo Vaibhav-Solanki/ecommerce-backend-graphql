@@ -8,5 +8,5 @@ export async function resolver (parent, args, contextValue) {
   const { dal } = contextValue.context
   const repo = await dal.getRepo('reviews')
 
-  return await repo.findReviewByProductId(productId)
+  return await repo.findGroup({ product_id: productId })
 }

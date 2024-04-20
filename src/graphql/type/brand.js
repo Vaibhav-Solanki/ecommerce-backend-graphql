@@ -5,7 +5,7 @@ export const resolver = {
     const { dal } = contextValue.context
 
     const repo = await dal.getRepo('products')
-    if (parent.id) return await repo.findProductByBrand(parent.id)
+    if (parent.id) return await repo.findGroup({ brand_id: parent.id })
     return null
   }
 }

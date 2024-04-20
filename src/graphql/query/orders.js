@@ -8,5 +8,5 @@ export async function resolver (parent, args, contextValue) {
   const { dal } = context
   const repo = await dal.getRepo('orders')
 
-  return await repo.findOrdersByCustomerId(user.identity.id)
+  return await repo.findGroup({ customer_id: user.identity.id })
 }

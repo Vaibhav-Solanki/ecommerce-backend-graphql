@@ -14,7 +14,7 @@ export async function resolver (parent, args, contextValue) {
   const customerId = user.identity.id
   let productValue = 0
 
-  const cartItems = await repo.findCartByCustomer(customerId)
+  const cartItems = await repo.findGroup({ customer_id: customerId })
 
   for (const index in cartItems) {
     cartItems[index].product = await productRepo.findById(cartItems[index].product_id)
