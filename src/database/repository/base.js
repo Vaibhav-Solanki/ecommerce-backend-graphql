@@ -54,7 +54,9 @@ class BaseRepo {
   }
 
   async findGroup (entity) {
-    return await this.model.query().select('*').where(entity)
+    const res = await this.model.query().select('id').where(entity)
+    const ids = res.map(row => row.id)
+    return await this.findAllIds(ids)
   }
 
   async findById (value) {
@@ -65,6 +67,15 @@ class BaseRepo {
       this.setData('id', load)
     }
     return load
+  }
+
+  async findAllIds (ids) {
+    const rows = []
+    for (const id of ids) {
+      const row = await this.findById(id)
+      rows.push(row)
+    }
+    return rows
   }
 
   async findOne (query) {

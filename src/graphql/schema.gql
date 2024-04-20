@@ -33,6 +33,7 @@ type Category {
     description: String
     parent_category_id: Int
     parent_category: Category
+    sub_category: [Category]
     created_at: DateTime
 }
 

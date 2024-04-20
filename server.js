@@ -15,7 +15,7 @@ import logger from './src/utils/logger.js'
 const yoga = createYoga({
   schema: createSchema({
     typeDefs: fs.readFileSync(
-      path.join(path.dirname(fileURLToPath(import.meta.url)), './src/graphql/schema.graphql'),
+      path.join(path.dirname(fileURLToPath(import.meta.url)), './src/graphql/schema.gql'),
       'utf-8'
     ),
     resolvers
