@@ -54,9 +54,8 @@ class BaseRepo {
   }
 
   async findGroup (entity) {
-    const res = await this.model.query().select('id').where(entity)
-    const ids = res.map(row => row.id)
-    return await this.findAllIds(ids)
+    const load = await this.model.query().select('id').where(entity)
+    return await this.findAllIds(load.map(row => row.id))
   }
 
   async findById (value) {
@@ -140,9 +139,8 @@ class BaseRepo {
   }
 
   async findAll (column = 'id', order = 'desc') {
-    const load = await this.model.query().orderBy(column, order)
-    load.map(el => this.setData('id', el))
-    return load
+    const load = await this.model.query().select('id').orderBy(column, order)
+    return this.findAllIds(load.map(row => row.id))
   }
 
   async insert (entity) {
@@ -163,7 +161,7 @@ class BaseRepo {
 
   async update (entity, update) {
     const load = await this.model.query().returning('*').update(update).where(entity)
-    load.map(el => this.setData('id', el))
+    load.forEach(el => this.setData('id', el))
     return load
   }
 
