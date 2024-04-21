@@ -19,6 +19,7 @@ class Product extends BaseModel {
         name: { type: 'string' },
         description: { type: 'string' },
         price: { type: 'number' },
+        discounted_price: { type: 'number' },
         stock_quantity: { type: 'integer' },
         reserved_quantity: { type: 'integer' },
         created_at: { type: 'string', format: 'date-time' }

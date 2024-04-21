@@ -54,6 +54,7 @@ type Product {
     description: String
     product_images: [ProductImage]
     price: Float!
+    discounted_price: Float!
     stock_quantity: Int!
     reserved_quantity: Int!
     created_at: DateTime!
@@ -147,7 +148,7 @@ type Review {
     product_id: Int
     product: Product
     customer_id: Int
-    customer: Customer
+    customer_name: String
     rating: Int
     review_text: String
     review_date: DateTime
