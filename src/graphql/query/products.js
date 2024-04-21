@@ -6,5 +6,9 @@ export async function resolver (parent, args = {}, contextValue) {
   const { dal } = contextValue.context
   const repo = await dal.getRepo('products')
 
-  return await repo.findGroup(args)
+  const found = await repo.getCount(args)
+  return {
+    found,
+    args
+  }
 }

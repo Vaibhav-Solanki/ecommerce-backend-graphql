@@ -39,9 +39,23 @@ class BaseRepo {
     return rows
   }
 
-  async findGroup (entity) {
-    const load = await this.model.query().select('id').where(entity)
-    return await this.findAllIds(load.map(row => row.id))
+  async findGroup (entity, paginate) {
+    let queryBuilder = this.model.query().select('id').where(entity)
+
+    if (paginate) {
+      const { limit = 0, offset = 0 } = paginate
+      queryBuilder = queryBuilder.offset(offset).limit(limit)
+    }
+
+    console.log(paginate)
+
+    const load = await queryBuilder
+    return this.findAllIds(load.map(row => row.id))
+  }
+
+  async getCount (entity) {
+    const load = await this.model.query().count('*').where(entity)
+    return load?.length > 0 ? load[0].count : 0
   }
 
   async findById (value) {

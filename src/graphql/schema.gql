@@ -154,13 +154,23 @@ type Review {
     review_date: DateTime
 }
 
+input PaginationInput{
+    limit: Int
+    offset: Int
+}
+
+type PaginateProducts{
+    found: Int
+    products(page: PaginationInput): [Product]
+}
+
 type Query {
     Ping: String
     brands: [Brand]
     brand(id: Int!): Brand
     categories(level: Int): [Category]
     category(id: Int!): Category
-    products(category_id: Int brand_id: Int): [Product]
+    products(category_id: Int brand_id: Int): PaginateProducts
     product(id: Int!): Product
     address(id: Int!): Address
     addresses: [Address]
