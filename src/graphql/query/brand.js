@@ -1,6 +1,6 @@
 export const name = 'brand'
 
-export const auth = true
+export const auth = false
 
 export async function resolver (parent, args, contextValue) {
   const { id } = args

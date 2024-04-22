@@ -1,6 +1,6 @@
 export const name = 'reviews'
 
-export const auth = true
+export const auth = false
 
 export async function resolver (parent, args, contextValue) {
   const { product_id: productId } = args
