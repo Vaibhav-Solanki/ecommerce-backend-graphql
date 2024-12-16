@@ -18,7 +18,7 @@ export const configCateKey = process.env.CATE_KEY
 export const redisUrl = process.env.REDIS_URL
 
 export const imageKitConfig = {
-  publicKey: 'public_NTkBcm/8Jg5OAKaVWJ9lsbwApIE=',
+  publicKey: 'public_NBuvyp4iU24i0pxTAdkOZlAmVws=',
   privateKey: process.env.IMAGEKITKEY,
-  urlEndpoint: 'https://ik.imagekit.io/itsVaibhav'
+  urlEndpoint: 'https://ik.imagekit.io/rasputin'
 }

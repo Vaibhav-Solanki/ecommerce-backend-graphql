@@ -5,7 +5,7 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "start": "node server.js",
+    "start": "nodemon server.js",
     "dev": "NODE_ENV=local nodemon server.js",
     "lintfix": "eslint --fix ./ "
   },
@@ -40,6 +40,6 @@
     "eslint-plugin-n": "^16.6.2",
     "eslint-plugin-promise": "^6.1.1",
     "globals": "^15.0.0",
-    "nodemon": "^3.1.0"
+    "nodemon": "^3.1.9"
   }
 }
