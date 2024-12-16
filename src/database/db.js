@@ -65,7 +65,8 @@ const repoList = [
   'product_images',
   'products',
   'reviews',
-  'files'
+  'files',
+  'fcm_notification'
 ]
 
 // preload

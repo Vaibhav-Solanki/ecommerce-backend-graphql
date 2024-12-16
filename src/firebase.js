@@ -30,3 +30,16 @@ export const createCustomer = functions
     const repo = getRepo('customers')
     await repo.insert(customerData)
   })
+
+export const handleFcmToken = async (user, token) => {
+  const repo = await getRepo('fcm_notification')
+  const fcmTokens = await repo.findByUserId(user.identity.id)
+  if (fcmTokens.length > 0) {
+    const tokenMap = repo.mapBy('fcm_token', fcmTokens)
+    if (tokenMap.has(token)) {
+      return true
+    }
+  }
+  await repo.insert({ customer_id: user.identity.id, fcm_token: token })
+  return true
+}

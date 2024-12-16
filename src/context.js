@@ -6,7 +6,7 @@
 import * as dal from './database/db.js'
 
 // Import the Firebase app and authentication module
-import { app, auth } from './firebase.js'
+import { app, auth, handleFcmToken } from './firebase.js'
 import logger from './utils/logger.js'
 import imagekit from './storage/image-kit.js'
 import { v4 as uuid } from 'uuid'
@@ -20,6 +20,8 @@ export async function middleware ({ request }) {
 
   // get the user token from the headers
   const token = request.headers.get('authorization')
+  const fcmToken = request.headers.get('fcmToken')
+
   const user = {
     identity: {},
     decoded: {},
@@ -43,5 +45,11 @@ export async function middleware ({ request }) {
   } catch (error) {
     logger.warn(error)
   }
+
+  handleFcmToken(user, fcmToken)
+    .catch((error) => {
+      logger.warn(error)
+    })
+
   return { user, context }
 }
