@@ -47,8 +47,6 @@ class BaseRepo {
       queryBuilder = queryBuilder.offset(offset).limit(limit)
     }
 
-    console.log(paginate)
-
     const load = await queryBuilder
     return this.findAllIds(load.map(row => row.id))
   }
