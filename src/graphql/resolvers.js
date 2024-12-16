@@ -34,7 +34,7 @@ const initializeResolvers = async (resolverType) => {
   logger.info(`Loading ${resolverType} resolvers from ${resolverPattern}`)
 
   // Find resolver files matching the pattern
-  const files = await glob(resolverPattern)
+  const files = await glob(resolverPattern, { posix: true, dotRelative: true })
 
   // Load resolver packages from files
   const packages = await loadResolverPackages(files)
