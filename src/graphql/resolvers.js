@@ -16,14 +16,20 @@ const __dirname = dirname(__filename)
 
 // Generate resolver file pattern based on resolver type
 const generateResolverPattern = (resolver) => {
-  return path.join(__dirname, `${resolver}/*.js`)
+  return path.join(__dirname, `${resolver}/*.js`).split('\\').join('/')
+}
+
+// Get relative path
+const generateRelativePath = (absolutePath) => {
+  return `./${path.relative(__dirname, absolutePath)}`.split('\\').join('/')
 }
 
 // Load resolver packages from files
 const loadResolverPackages = async (files) => {
   return Promise.all(files.map(async (file) => {
-    logger.info(`Loading resolver file: ${file}`)
-    return await import(file)
+    const filePath = generateRelativePath(file)
+    logger.info(`Loading resolver file: ${filePath}`)
+    return await import(filePath)
   }))
 }
 
